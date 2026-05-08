@@ -52,24 +52,23 @@ const DEFAULT_MODEL = {
 	maxTokens: 0,
 } satisfies Model<any>;
 
-
 function applyKimiModelOverride(model: Model<any>): Model<any> {
-  const modelId = process.env.ANTHROPIC_MODEL_ID;
-  const baseUrl = process.env.ANTHROPIC_BASE_URL;
+	const modelId = process.env.ANTHROPIC_MODEL_ID;
+	const baseUrl = process.env.ANTHROPIC_BASE_URL;
 
-  if (!modelId && !baseUrl) {
-    return model;
-  }
+	if (!modelId && !baseUrl) {
+		return model;
+	}
 
-  return {
-    ...model,
-    id: modelId || model.id,
-    name: modelId || model.name,
-    provider: "anthropic",
-    api: "anthropic-messages",
-    baseUrl: baseUrl || model.baseUrl,
-    reasoning: false,
-  };
+	return {
+		...model,
+		id: modelId || model.id,
+		name: modelId || model.name,
+		provider: "anthropic",
+		api: "anthropic-messages",
+		baseUrl: baseUrl || model.baseUrl,
+		reasoning: false,
+	};
 }
 
 type QueueMode = "all" | "one-at-a-time";
