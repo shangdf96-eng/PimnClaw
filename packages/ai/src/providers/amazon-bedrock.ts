@@ -498,7 +498,15 @@ function mapThinkingLevelToEffort(
 	model: Model<"bedrock-converse-stream">,
 	level: SimpleStreamOptions["reasoning"],
 ): "low" | "medium" | "high" | "xhigh" | "max" {
+	if (
+		level === "xhigh" &&
+		getModelMatchCandidates(model.id, model.name).some((candidate) => candidate.includes("opus-4-7"))
+	) {
+		return "xhigh";
+	}
+
 	const mapped = level ? model.thinkingLevelMap?.[level] : undefined;
+
 	if (typeof mapped === "string") return mapped as "low" | "medium" | "high" | "xhigh" | "max";
 
 	switch (level) {
